@@ -27,13 +27,11 @@ During the workshop we will be using some known bioinformatics software to proce
 Most of the software we need is availble through the package manager.
 
 ```{}
-
 sudo apt install bowtie2
 sudo apt install samtools
 sudo apt install bedtools
 pip install MACS2
 pip install deeptools
-
 ```
 
 ### Mac OS
