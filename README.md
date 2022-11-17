@@ -4,7 +4,7 @@ This workshop will guide you through the basics of ChIP-seq analysis with hands-
 
 ## Instructions
 
-There are two options to install the software: Manual or Docker. This page covers the instructions to install manually and is the recommended option. If you are familiar with Docker and have already installed Docker, you can follow the indications in [here](/Using_Docker.md)
+There are two options to install the software: Manual or Docker. This page covers the instructions to install manually and is the recommended option. If you are familiar with Docker and have already installed Docker, you can follow the indications in [here](/Using_Docker.md).
 
 ## Requirements
 We will be using the unix terminal to run our analyses, so be sure you have access to one. 
@@ -24,7 +24,7 @@ We will be using the unix terminal to run our analyses, so be sure you have acce
 * [Bedtools](https://bedtools.readthedocs.io/en/latest/)
 * [Deeptools](https://deeptools.readthedocs.io/en/develop/)
 
-> To install the software, look at the instructions for your operating system. Open your terminal and copy and paste the following commands inside the text boxes
+> To install the software, look at the instructions for your operating system. Open your terminal and copy and paste the following commands inside the text boxes.
 
 ### Linux distribution and Windows with WSL
 Most of the software we need is availble through the package manager.
@@ -61,10 +61,13 @@ If you are using python (3.10), please install [MACS3](https://pypi.org/project/
 pip3 install MACS3
 ```
 
-### R
-In R, install the following libraries
+## R libraries
+This will be needed for all platforms. In R, install ChIPQC
 ```{r}
-install.packages()
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ChIPQC")
 ```
 
 ## Check the installation
@@ -77,4 +80,4 @@ macs2 --help # or macs3 --help
 deeptools --help
 ```
 
-If you run into any issues, join the pre-workshop session online. 
+If you run into any issues, you can join the pre-workshop session online. 
