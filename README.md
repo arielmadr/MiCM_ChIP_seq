@@ -12,8 +12,8 @@ We will be using the unix terminal to run our analyses, so be sure you have acce
 * Mac OS and any linux distribution will have a terminal already
     * Mac OS: search for terminal in your spotlight search
 * Windows users: 
-    * Option 1: Download a [unix subsystem (WSL)](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview) **recommended
-    * Option 2: Download [MobaXterm](https://mobaxterm.mobatek.net/)
+    * Download a [unix subsystem (WSL)](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview) 
+
 
 ## Sofware
 * Python3 (>=3.6) is required for installing MACS2 and Deeptools
