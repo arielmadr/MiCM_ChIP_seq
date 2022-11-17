@@ -1,4 +1,4 @@
-# some common issues
+# FAQ for install issues
 
 ### Linux distribution and Windows with WSL
 
@@ -6,14 +6,7 @@
 
 ```{}
 sudo apt update
-sudo apt install python3.8
-sudo apt install python3-pip
-```
-
-#### Can't find pip
-
-```{}
-sudo apt install python3-pip
+sudo apt install python3.8 python3-pip
 ```
 
 ## Upgrade a package
