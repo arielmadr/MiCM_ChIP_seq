@@ -24,8 +24,20 @@ docker pull njaved/deeptools
 ## Check the installation
 To check that the program works, you can check if the help message gets printed:
 ```{}
-docker run biocontainers/bowtie2:v2.4.1_cv1 bowtie2 -h
+docker run biocontainers/bowtie2:v2.4.1_cv1 bowtie2 --help
 docker run biocontainers/samtools:v1.9-4-deb_cv1 samtools --help
+docker run biocontainers/bedtools:v2.27.1dfsg-4-deb_cv1 bedtools --help
 docker run dceoy/macs2  --help
 docker run njaved/deeptools deeptools --help
+```
+
+## R libraries
+
+It is still recommended to install R and Rstudio locally with its dependencies
+
+```{r}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ChIPQC")
 ```
