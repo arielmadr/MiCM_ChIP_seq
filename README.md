@@ -2,6 +2,10 @@
 
 This workshop will guide you through the basics of ChIP-seq analysis with hands-on exercises. Participants will learn how to process ChIP-seq data: perform read alignment, peak calling, visualization through the genome browser, motif finding and gene set enrichment analysis. 
 
+## Data download 
+
+You can download the data/scripts needed for this workshop in [here](https://mcgill-my.sharepoint.com/:u:/g/personal/larisa_moralessoto_mail_mcgill_ca/ETKpYkgvIp5KhKvSOX-1jaoBo-cTsjkDfWwuop7Z6qmIMg?e=M1LvTg). 
+
 ## Instructions
 
 There are two options to install the software: Manual or Docker. This page covers the instructions to install manually and is the recommended option. If you are familiar with Docker and have already installed Docker, you can follow the indications in [here](/Using_Docker.md).
