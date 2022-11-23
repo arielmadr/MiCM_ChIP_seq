@@ -1,0 +1,115 @@
+---
+title: "MiCM: Quality Control"
+author: "Ariel Madrigal Aguirre"
+date: "`r Sys.Date()`"
+output:
+  html_notebook:
+    df_print: paged
+    code_folding: show
+    toc: yes
+    toc_float: 
+      collapsed: false
+      smooth_scroll: false
+---
+
+```{r,echo=FALSE}
+htmltools::img(src = knitr::image_uri("images/micm_color_logo.png"), 
+               alt = 'logo', 
+               style = 'position:absolute; top:30px; right:0; padding:10px; max-width:50%;')
+```
+
+This workshop will guide you through the basics of ChIP-seq analysis with hands-on exercises. You will learn how to process ChIP-seq data: perform read alignment, peak calling, quality control, visualization through the genome browser, motif finding and gene set enrichment analysis.
+
+In this tutorial, we are going to focus on quality control. 
+
+**Note**: All the code in this tutorial will be performed in R. You can follow up by typing R in your terminal or in Rstudio.
+
+For this tutorial, we are going to use the R library ChIPQC
+```{r, message=FALSE}
+library(ChIPQC)
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+# You can install R libraries  with the following lines:
+# if (!require("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+# BiocManager::install("ChIPQC")
+# BiocManager::install("TxDb.Hsapiens.UCSC.hg38.knownGene")
+
+```
+You can find the manual in [here](https://bioconductor.org/packages/release/bioc/vignettes/ChIPQC/inst/doc/ChIPQC.pdf).
+
+
+## Reading data
+This tutorial assumes that you are in the scripts directory, check the path with
+
+Let's move to the scripts directory (or stay here if already there):
+```{r, eval=F}
+setwd("chip_seq/scripts")
+```
+We've already prepared the sample sheet needed by ChIPQC. You can read it like this
+```{r}
+df<- read.table("../data/qc/qc.tsv", header=T)
+df
+```
+Then, we construct the ChIPQC Experiment object
+```{r}
+chip<- ChIPQC(df, annotation="hg38")
+```
+
+## Summary of QCs
+
+Let's visualize the results
+```{r}
+chip
+```
+
+**FragL**
+This is the estimated mean fragment length that is calculated from the data by systematically shifting the reads on each strand towards each other until the highest degree of cross-coverage is obtained.
+
+**RelCC**
+RelCC is a metric of ChIP-enrichment. It is calculated by comparing the maximal cross coverage peak (at the shift size corresponding to the fragment length) to the cross coverage at a shift size corresponding to the read length. Generally a value of 1 or greater is recommended. 
+
+**RiP%**
+RiP stands for percentage of reads in peaks, also known as FRIP. This is again an indicator of good enrichments. ChIPs around 1% or higher usually indicate successful enrichment.
+
+**SSD**
+SSD is another metric of ChIP-enrichment. It is looking at the density of positions with different pileup values. The higher the value the more successful the ChIP was. SSD values close to 1 are generally correlated of poorly enriched samples, while successful ChIPs can expect values around 1.5, with highly enriched samples having SSD values of 2 or higher.  It is computed by looking at the standard deviation of signal pile-up along the genome normalised to the total number of reads. An enriched sample typically has regions of significant pile-up so a higher SSD is more indicative of better enrichment. SSD scores are dependent on the degree of total genome wide signal pile-up and so are sensitive to regions of high signal found with Blacklisted regions as well as genuine ChIP enrichment.
+
+
+## Cross-correlation
+We can plot the cross-correlation profile:
+
+```{r}
+plotCC(chip)
+```
+We don't observe easily the 'phantom-peak', but there seems to be enrichment around the fragment length, which might indicate that these samples are of good quality. 
+
+We can plot other QCs associated with this sample.
+
+## Enrichment in genomic intervals
+A heatmap plot showing relative enrichment of reads around annotated genomic features.
+```{r}
+plotRegi(chip)
+```
+
+## Peak profiles
+Eeach peak is centered on its summit (point of highest pileup after extending the reads to the calculated fragment length), and the pileup values at bases in a window upstream and downstream of the summits is computed and averaged for all peaks in the sample. Good ChIPs will show distinctive patterns of enrichment in these peaks, while associated controls will be relatively flat. 
+```{r}
+plotPeakProfile(chip)
+```
+## Plotting sample clustering
+
+### Correlation heatmap
+The correlation heatmap is based on correlation values for all the peak scores for each sample.
+```{r}
+plotCorHeatmap(chip)
+```
+### PCA
+Compute a PCA based on all the peak scores for each sample.
+```{r}
+plotPrincomp(chip)
+```
+
+```{r}
+sessionInfo()
+```
+

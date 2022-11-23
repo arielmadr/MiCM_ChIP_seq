@@ -1,0 +1,55 @@
+---
+title: "MiCM: visualization"
+author: "Ariel Madrigal Aguirre"
+date: "`r Sys.Date()`"
+output:
+  html_notebook:
+    df_print: paged
+    code_folding: show
+    toc: yes
+    toc_float: 
+      collapsed: false
+      smooth_scroll: false
+---
+
+```{r,echo=FALSE}
+htmltools::img(src = knitr::image_uri("images/micm_color_logo.png"), 
+               alt = 'logo', 
+               style = 'position:absolute; top:30px; right:0; padding:10px; max-width:50%;')
+```
+
+This workshop will guide you through the basics of ChIP-seq analysis with hands-on exercises. You will learn how to process ChIP-seq data: perform read alignment, peak calling, quality control, visualization through the genome browser, motif finding and gene set enrichment analysis.
+
+In this tutorial, we are going to perform motif finding and gene set enrichment analysis. For both tasks, we are going to use a bed file from the data folder, which has the peak calls for HIF1a across the whole genome.
+
+**Note**: All the code in this tutorial will be performed in the terminal. 
+
+Let's move to the scripts directory (or stay here if already there):
+```{bash, eval=F}
+cd chip_seq/scripts
+```
+Let's take a look at our bed file:
+```{bash}
+head ../data/complete/RCC4_Normoxia_HIF1a_PM14_Rep1.bed
+```
+Count the number of peaks:
+```{bash}
+wc -l ../data/complete/RCC4_Normoxia_HIF1a_PM14_Rep1.bed
+```
+# Motif finding
+For motif finding, we are going to use [MEME](https://meme-suite.org/meme/tools/meme-chip). For this tutorial, we are going to use the online interactive suite, but you can download/install meme locally by following the instructions in [here](https://meme-suite.org/meme/doc/download.html). There is also a R package that connects the installation to R, you can check it [here](https://bioconductor.org/packages/release/bioc/html/memes.html).  
+
+If the online job takes too long, you can also explore the results in here:
+```{bash}
+ls ../answers/meme/
+```
+Open the meme chip [results](../answers/meme/meme-chip.html)
+
+# Gene set enrichment analysis
+For gene set enrichment analysis, we are going to use [GREAT](http://great.stanford.edu/public/html/index.php). For this tutorial, we are going to use the online interactive suite, but you can download/install GREAT locally by following the instructions in [here](https://great-help.atlassian.net/wiki/spaces/GREAT/pages/655416/Download). There is also a R package that allows you to use GREAT, you can check it [here](https://bioconductor.org/packages/release/bioc/html/rGREAT.html).
+
+
+```{r}
+sessionInfo()
+```
+
