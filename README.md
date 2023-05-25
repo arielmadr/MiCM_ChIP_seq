@@ -84,4 +84,9 @@ macs2 --help # or macs3 --help
 deeptools --help
 ```
 
+## Check the tutorials
+
+* [Alignment](/Exercises/scripts/01_alignment.nb.html)
+
+
 If you run into any issues, you can join the pre-workshop session online. 
