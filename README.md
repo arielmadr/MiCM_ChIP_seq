@@ -87,6 +87,9 @@ deeptools --help
 ## Check the tutorials
 
 * [Alignment](/Exercises/scripts/01_alignment.nb.html)
-
+* [Peak calling](/Exercises/scripts/02_peak_calling.nb.html)
+* [Peak calling](/Exercises/scripts/03_qc.Rmd)
+* [Visualization](/Exercises/scripts/04_visualization.nb.html)
+* [Motif enrichment](/Exercises/scripts/05_motif_and_enrichment.nb.html)
 
 If you run into any issues, you can join the pre-workshop session online. 
