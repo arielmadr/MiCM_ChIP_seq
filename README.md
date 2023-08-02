@@ -86,7 +86,7 @@ deeptools --help
 
 ## Check the tutorials
 
-* [Alignment](/Exercises/scripts/01_alignment.nb.html)
+* [Alignment](https://htmlpreview.github.io/?https://github.com/arielmadr/MiCM_ChIP_seq/blob/main/Exercises/scripts/01_alignment.nb.html)
 * [Peak calling](/Exercises/scripts/02_peak_calling.nb.html)
 * [QC](/Exercises/scripts/03_qc.nb.html)
 * [Visualization](/Exercises/scripts/04_visualization.nb.html)
