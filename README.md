@@ -88,7 +88,7 @@ deeptools --help
 
 * [Alignment](https://htmlpreview.github.io/?https://github.com/arielmadr/MiCM_ChIP_seq/blob/main/Exercises/scripts/01_alignment.nb.html)
 * [Peak calling](/Exercises/scripts/02_peak_calling.nb.html)
-* [QC](/Exercises/scripts/03_qc.nb.html)
+* [QC](https://arielmadr.github.io/MiCM_ChIP_seq/Exercises/scripts/03_qc.nb.html)
 * [Visualization](/Exercises/scripts/04_visualization.nb.html)
 * [Motif enrichment](/Exercises/scripts/05_motif_and_enrichment.nb.html)
 
