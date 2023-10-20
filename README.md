@@ -12,7 +12,7 @@ We will be using the unix terminal to run our analyses, so be sure you have acce
 * Mac OS and any linux distribution will have a terminal already
     * Mac OS: search for terminal in your spotlight search
 * Windows users: 
-    * Download a [unix subsystem (WSL)](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview) 
+    * Download a [unix subsystem (WSL)](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-11-with-gui-support#1-overview) 
 
 
 ## Sofware
