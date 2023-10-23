@@ -84,10 +84,10 @@ deeptools --help
 
 ## Check the tutorials
 
-* [Alignment](https://arielmadr.github.io/MiCM_ChIP_seq/Exercises/scripts/01_alignment.nb.html)
-* [Peak calling](https://arielmadr.github.io/MiCM_ChIP_seq/Exercises/scripts/02_peak_calling.nb.html)
-* [QC](https://arielmadr.github.io/MiCM_ChIP_seq/Exercises/scripts/03_qc.nb.html)
-* [Visualization](https://arielmadr.github.io/MiCM_ChIP_seq/Exercises/scripts/04_visualization.nb.html)
-* [Motif enrichment](https://arielmadr.github.io/MiCM_ChIP_seq/Exercises/scripts/05_motif_and_enrichment.nb.html)
+* [01 - Alignment](https://arielmadr.github.io/MiCM_ChIP_seq/Exercises/scripts/01_alignment.nb.html)
+* [02 - Peak calling](https://arielmadr.github.io/MiCM_ChIP_seq/Exercises/scripts/02_peak_calling.nb.html)
+* [03 - QC](https://arielmadr.github.io/MiCM_ChIP_seq/Exercises/scripts/03_qc.nb.html)
+* [04 - Visualization](https://arielmadr.github.io/MiCM_ChIP_seq/Exercises/scripts/04_visualization.nb.html)
+* [05 - Motif enrichment](https://arielmadr.github.io/MiCM_ChIP_seq/Exercises/scripts/05_motif_and_enrichment.nb.html)
 
 If you run into any issues, you can join the pre-workshop session online. 

@@ -1,7 +1,7 @@
 ---
-title: "MiCM: visualization"
+title: "MiCM: 04 - visualization"
 author: "Ariel Madrigal Aguirre"
-date: "`r Sys.Date()`"
+date: "2023-10-25"
 output:
   html_notebook:
     df_print: paged
@@ -22,7 +22,7 @@ This workshop will guide you through the basics of ChIP-seq analysis with hands-
 
 **Note**: All the code in this tutorial will be performed in the terminal. 
 
-# UCSC genome browser
+# 01 - UCSC genome browser
 
 ## Upload of peak files
 
@@ -43,7 +43,8 @@ Remember that in the UCSC genome browser you have to specify the positions in th
 
 ## Generation of bigwig 
 
-One of the most common/useful formats to visualize the data is the bigwig format. To generate this, we are going to use [deeptools](https://deeptools.readthedocs.io/en/develop/).
+One of the most common/useful formats to visualize the data is the bigwig format. To generate this, we are going to use [deeptools](https://deeptools.readthedocs.io/en/develop/).deepTools is a suite of python tools particularly developed for the efficient analysis of high-throughput sequencing data, such as ChIP-seq, RNA-seq or MNase-seq. It offers a lot of tools for processing BAM and bigwig files.
+
 
 We are going to convert our .BAM file ( from our alignment step) into a .bigwig file
 
@@ -78,8 +79,59 @@ track type=bigWig name="HIF1a_rep1" description="HIF1a bigwig" bigDataUrl=https:
 ```
 You can read more about how to upload data to the UCSC genome browser in here:
 
-* [create custom tracks](https://genome.ucsc.edu/goldenPath/help/customTrack.html)
-* [create Track Hubs](https://genome.ucsc.edu/goldenpath/help/hgTrackHubHelp.html) 
+* [Create custom tracks](https://genome.ucsc.edu/goldenPath/help/customTrack.html)
+* [Create Track Hubs](https://genome.ucsc.edu/goldenpath/help/hgTrackHubHelp.html) 
+
+# 02 - Deeptools
+
+Deeptools also offers different tools for visualizing ChIP-seq data, including the generation of Heatmaps and different summary plots. For now, let's try the [plotHeatmap function](https://deeptools.readthedocs.io/en/develop/content/tools/plotHeatmap.html). 
+
+```{bash}
+mkdir -p ../results/deeptools
+```
+The first step is to compute the signal using computeMatrix. computeMatrix has two modes: 
+* scale regions: In the scale-regions mode, all regions in the BED file are stretched or shrunken to the length (in bases) indicated by the user. 
+* reference-point: Reference-point refers to a position within a BED region (e.g., the starting point). In this mode, only those genomicpositions before (upstream) and/or after (downstream) of the reference point will be plotted. You can read more about them [here](https://deeptools.readthedocs.io/en/develop/content/tools/computeMatrix.html). 
+
+```{bash}
+computeMatrix reference-point -S ../results/HIF1a_Rep1.bigwig \
+			  --referencePoint center \
+			  -R ../results/macs2/HIF1a_rep1_summits.bed \
+			  --beforeRegionStartLength 3000 \
+			  --afterRegionStartLength 3000 \
+			  --skipZeros \
+			  -o ../results/deeptools/matrix.mat.gz
+```
+* -S: bigWig file(s) containing the scores to be plotted. Multiple files should be separated by spaced.
+* --referencePointThe: reference point for the plotting could be either the region start (TSS), the region end (TES) or the center of the region.
+* -R: File name or names, in BED or GTF format, containing the regions to plot. If multiple bed files are given, each one is considered a group that can be plotted separately.
+* --beforeRegionStartLength: Distance upstream of the reference-point selected. (Default: 500)
+* --afterRegionStartLength: Distance downstream of the reference-point selected. (Default: 1500)
+* skipZeros: Whether regions with only scores of zero should be included or not.
+* -o: File name to save. 
+
+```{bash}
+plotHeatmap -m ../results/deeptools/matrix.mat.gz \
+			--heatmapHeight 5  \
+			--refPointLabel 'Peak summit' \
+			--regionsLabel 'HIF1a peaks' \
+			--plotTitle 'Peak summits (HIF1a)' \
+			-out ../results/deeptools/HIF1a_heatmap.png
+```
+
+![](../results/deeptools/HIF1a_heatmap.png)
+
+* -m: Matrix file from the computeMatrix tool. 
+* -out: File name to save the image to. 
+* --heatmapHeight: Plot height in cm.
+* --refPointLabel: Label shown in the plot for the reference-point. 
+* --regionsLabel: Labels for the regions plotted in the heatmap. If more than one region is being plotted, a list of labels separated by spaces is required.
+* --plotTitle: Title of the plot, to be printed on top of the generated image
+
+# 03 - Exercises
+
+* 1. Include the HIF2a data in the Heatmap from Deeptools. This heatmap should show the  coverage for both HIF1a and HIF2a peaks. 
+
 
 ```{r}
 sessionInfo()

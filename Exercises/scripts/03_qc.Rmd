@@ -1,7 +1,7 @@
 ---
-title: "MiCM: Quality Control"
+title: "MiCM: 03 - Quality Control"
 author: "Ariel Madrigal Aguirre"
-date: "`r Sys.Date()`"
+date: "2023-10-25"
 output:
   html_notebook:
     df_print: paged
@@ -38,7 +38,7 @@ library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 You can find the manual in [here](https://bioconductor.org/packages/release/bioc/vignettes/ChIPQC/inst/doc/ChIPQC.pdf).
 
 
-## Reading data
+## 01 - Reading data
 This tutorial assumes that you are in the scripts directory, check the path with
 
 Let's move to the scripts directory (or stay here if already there):
@@ -55,7 +55,7 @@ Then, we construct the ChIPQC Experiment object
 chip<- ChIPQC(df, annotation="hg38")
 ```
 
-## Summary of QCs
+## 02 - Summary of QCs
 
 Let's visualize the results
 ```{r}
@@ -75,7 +75,7 @@ RiP stands for percentage of reads in peaks, also known as FRIP. This is again a
 SSD is another metric of ChIP-enrichment. It is looking at the density of positions with different pileup values. The higher the value the more successful the ChIP was. SSD values close to 1 are generally correlated of poorly enriched samples, while successful ChIPs can expect values around 1.5, with highly enriched samples having SSD values of 2 or higher.  It is computed by looking at the standard deviation of signal pile-up along the genome normalised to the total number of reads. An enriched sample typically has regions of significant pile-up so a higher SSD is more indicative of better enrichment. SSD scores are dependent on the degree of total genome wide signal pile-up and so are sensitive to regions of high signal found with Blacklisted regions as well as genuine ChIP enrichment.
 
 
-## Cross-correlation
+## 03 - Cross-correlation
 We can plot the cross-correlation profile:
 
 ```{r}
@@ -85,18 +85,18 @@ We don't observe easily the 'phantom-peak', but there seems to be enrichment aro
 
 We can plot other QCs associated with this sample.
 
-## Enrichment in genomic intervals
+## 04 - Enrichment in genomic intervals
 A heatmap plot showing relative enrichment of reads around annotated genomic features.
 ```{r}
 plotRegi(chip)
 ```
 
-## Peak profiles
+## 05 - Peak profiles
 Eeach peak is centered on its summit (point of highest pileup after extending the reads to the calculated fragment length), and the pileup values at bases in a window upstream and downstream of the summits is computed and averaged for all peaks in the sample. Good ChIPs will show distinctive patterns of enrichment in these peaks, while associated controls will be relatively flat. 
 ```{r}
 plotPeakProfile(chip)
 ```
-## Plotting sample clustering
+## 06 - Plotting sample clustering
 
 ### Correlation heatmap
 The correlation heatmap is based on correlation values for all the peak scores for each sample.
@@ -107,6 +107,16 @@ plotCorHeatmap(chip)
 Compute a PCA based on all the peak scores for each sample.
 ```{r}
 plotPrincomp(chip)
+```
+
+## 07 - Exercises
+
+* 1. Add the data for HIF2a into the QC. The data needed can be found in the chip_seq/data folder. 
+```{bash}
+ls ../data/HIF2a_Rep1/
+```
+```{bash}
+ls ../data/HIF2a_Rep2/
 ```
 
 ```{r}

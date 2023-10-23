@@ -1,7 +1,7 @@
 ---
-title: "MiCM: visualization"
+title: "MiCM: 05 - motif and enrichment"
 author: "Ariel Madrigal Aguirre"
-date: "`r Sys.Date()`"
+date: "2023-10-25"
 output:
   html_notebook:
     df_print: paged
@@ -22,7 +22,7 @@ This workshop will guide you through the basics of ChIP-seq analysis with hands-
 
 In this tutorial, we are going to perform motif finding and gene set enrichment analysis. For both tasks, we are going to use a bed file from the data folder, which has the peak calls for HIF1a across the whole genome.
 
-**Note**: All the code in this tutorial will be performed in the terminal. 
+**Note**: The first section (Motif finding) will use the terminal. The second section will use R.
 
 Let's move to the scripts directory (or stay here if already there):
 ```{bash, eval=F}
@@ -36,19 +36,78 @@ Count the number of peaks:
 ```{bash}
 wc -l ../data/complete/RCC4_Normoxia_HIF1a_PM14_Rep1.bed
 ```
-# Motif finding
+# 01 - Motif finding
 For motif finding, we are going to use [MEME](https://meme-suite.org/meme/tools/meme-chip). For this tutorial, we are going to use the online interactive suite, but you can download/install meme locally by following the instructions in [here](https://meme-suite.org/meme/doc/download.html). There is also a R package that connects the installation to R, you can check it [here](https://bioconductor.org/packages/release/bioc/html/memes.html).  
 
 If the online job takes too long, you can also explore the results in here:
 ```{bash}
-ls ../answers/meme/
+ls ../answers/meme/HIF1a
 ```
-Open the meme chip [results](../answers/meme/meme-chip.html)
+Open the meme chip [results](../answers/meme/HIF1a/meme-chip.html).
 
-# Gene set enrichment analysis
-For gene set enrichment analysis, we are going to use [GREAT](http://great.stanford.edu/public/html/index.php). For this tutorial, we are going to use the online interactive suite, but you can download/install GREAT locally by following the instructions in [here](https://great-help.atlassian.net/wiki/spaces/GREAT/pages/655416/Download). There is also a R package that allows you to use GREAT, you can check it [here](https://bioconductor.org/packages/release/bioc/html/rGREAT.html).
+# 02 - Gene set enrichment analysis
 
+**Note**: The next chunks show R code. 
 
+For gene set enrichment analysis, we are going to use [GREAT](http://great.stanford.edu/public/html/index.php). For this tutorial, we are going to use the R package that allows you to use GREAT, you can check it [here](https://bioconductor.org/packages/release/bioc/html/rGREAT.html).
+
+Loading library
+```{r}
+library(rGREAT)
+```
+
+```{r}
+inp_bed<- read.table("../data/complete/RCC4_Normoxia_HIF1a_PM14_Rep1.bed")
+colnames(inp_bed)<- c("chr", "start", "end", "name", "score", "strand")
+head(inp_bed)
+gr<- makeGRangesFromDataFrame(inp_bed)
+job = submitGreatJob(gr, species="hg38")
+job
+```
+## Get enrichment tables
+```{r}
+tbl = getEnrichmentTables(job)
+```
+
+```{r}
+names(tbl)
+```
+
+```{r}
+head(tbl[["GO Biological Process"]])
+```
+```{r}
+head(tbl[["GO Molecular Function"]])
+```
+```{r}
+head(tbl[["GO Cellular Component"]])
+```
+
+## Volcano plot
+
+In differential gene expression analysis, volcano plot is used to visualize relations between log2 fold change and (adjusted) p-values. Similarly, we can also use volcano plot to visualize relations between fold enrichment and (adjusted) p-values for the enrichment analysis. The plot is made by the function plotVolcano():
+
+```{r, fig.width=7, fig.height=7}
+plotVolcano(job, ontology = "GO Biological Process")
+```
+
+## Get region-gene associations
+
+```{r, fig.width=9, fig.height=5}
+plotRegionGeneAssociations(job)
+```
+
+```{r}
+getRegionGeneAssociations(job)
+```
+
+# 03 - Exercises
+
+* 1. Repeat the Motif finding analysis and GSEA analysis using the data for HIF2a, which can be found here:
+
+```{bash}
+ls ../data/complete/RCC4_Normoxia_HIF2a_PM9_Rep1.bed
+```
 ```{r}
 sessionInfo()
 ```

@@ -1,7 +1,7 @@
 ---
-title: "MiCM: Peak Calling"
+title: "MiCM: 02 - Peak Calling"
 author: "Ariel Madrigal Aguirre"
-date: "`r Sys.Date()`"
+date: "2023-10-25"
 output:
   html_notebook:
     df_print: paged
@@ -24,7 +24,7 @@ In this tutorial, we are going to focus on peak calling.
 
 **Note**: All the code in this tutorial will be performed in the terminal. 
 
-# Peak Calling with MACS
+# 01 - Peak Calling with MACS
 
 Let's move to the scripts directory (or stay here if already there):
 ```{bash, eval=F}
@@ -41,7 +41,7 @@ ls  ../data/Input_Rep1/
 ```
 If you didn't compute the BAM for the alignment step, you can find it in here:
 ```{bash}
-ls ../answers/HIF1a_Rep1
+ls ../data/HIF1a_Rep1/HIF1a_Rep1.sorted.rmdup.bam
 ```
 Let's create an output directory for storing MACS results
 ```{bash}
@@ -78,13 +78,13 @@ We can also check the number of significant peaks called
 ```{bash}
 wc -l ../results/macs2/HIF1a_rep1_peaks.narrowPeak
 ```
-# Peak overlap between replicates
+# 02 - Peak overlap between replicates
 
 One of the most common problems in dealing with peaks in ChIP-seq analysis is to check if two sets of peaks overlap. To work through that, we are going to use bedtools intersect. You can find information about the tool in [here](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html). 
 
 ![](images/bedtools_intersect.png)
 
-For this excercise, we are going the overlap between peaks called by MACS2 for two replicates, one of them is the one we have processed so far, and the other one can be found in the data folder
+For this exercise, we are going the overlap between peaks called by MACS2 for two replicates, one of them is the one we have processed so far, and the other one can be found in the data folder
 ```{bash}
 ls ../data/HIF1a_Rep2/macs2/
 ```
@@ -100,9 +100,20 @@ We can also return not only the shared interval, but the original entries of A f
 ```{bash}
 bedtools intersect -a ../results/macs2/HIF1a_rep1_peaks.narrowPeak -b ../data/HIF1a_Rep2/macs2/HIF1a_rep2_peaks.narrowPeak -wa
 ```
-# Question
+# 03 - Exercises
  
-* By default, bedtools intersect will report an overlap between A and B so long as there is at least one base pair is overlapping. What argument would you change to overlap by at least 50 percent?
+* 1. Perform the peak calling steps for the HIF2a data. If you didn't complete the alignment step for HIF2a, a processed .bam file can be found in here: 
+```{bash}
+ls ../data/HIF2a_Rep1/HIF2a_Rep1.sorted.rmdup.bam
+```
+You can use the same input control as for HIF1a.
+
+* 2. How would you run MACS without a input ChIP-seq control? Test this using the HIF1a data.
+
+* 3. By default, bedtools intersect will report an overlap between A and B so long as there is at least one base pair is overlapping. What argument would you change to overlap by at least 50 percent? Test this using replicate 1 and replicate 2 of the HIF1a data. 
+
+* 4. Compare the overlap between the HIF1a replicates and between HIF1a and HIF2a.
+
 ```{r}
 sessionInfo()
 ```
